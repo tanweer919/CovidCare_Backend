@@ -5,8 +5,16 @@ export interface AvailableResourceInterface extends Document {
   description: string;
   contactName: string;
   phoneNumber: string;
-  lat: string;
-  long: string;
+  location: {
+    type: {
+      type: string,
+      enum: string[]
+    },
+    coordinates: {
+      type: number[]
+    },
+    index: string
+  };
   city: string;
   address: string;
   verified: number;
@@ -18,8 +26,16 @@ export interface ResourceRequestInterface extends Document {
   name: string;
   type: number;
   description: string;
-  lat: string;
-  long: string;
+  location: {
+    type: {
+      type: string;
+      enum: string[];
+    };
+    coordinates: {
+      type: number[];
+    };
+    index: string;
+  };
   city: string;
   address: string;
   contactName: string;

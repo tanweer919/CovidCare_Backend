@@ -1,5 +1,5 @@
 import mongoose, { Model } from "mongoose";
-import {AvailableResourceInterface} from "../interfaces/interface"
+import { AvailableResourceInterface } from "../interfaces/interface";
 const availableResourceSchema = new mongoose.Schema<AvailableResourceInterface>(
   {
     name: String,
@@ -7,17 +7,27 @@ const availableResourceSchema = new mongoose.Schema<AvailableResourceInterface>(
     description: String,
     contactName: String,
     phoneNumber: String,
-    lat: String,
-    long: String,
+    location: {
+      type: {
+        type: String, 
+        enum: ["Point"], 
+      },
+      coordinates: {
+        type: [Number],
+      },
+      index: '2dsphere'
+    },
     city: String,
     address: String,
     verified: Number,
     source: String,
-    location: String,
     like: Number,
   }
 );
 
-const AvailableResource: Model<AvailableResourceInterface> = mongoose.model("AvailableResource", availableResourceSchema);
+const AvailableResource: Model<AvailableResourceInterface> = mongoose.model(
+  "AvailableResource",
+  availableResourceSchema
+);
 
 export default AvailableResource;

@@ -4,8 +4,18 @@ const ResourceRequestSchema = new mongoose.Schema<ResourceRequestInterface>({
   name: String,
   type: Number,
   description: String,
-  lat: String,
-  long: String,
+  location: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+    index: "2dsphere",
+  },
   city: String,
   address: String,
   contactName: String,
