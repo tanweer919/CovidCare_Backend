@@ -6,14 +6,8 @@ export interface AvailableResourceInterface extends Document {
   contactName: string;
   phoneNumber: string;
   location: {
-    type: {
-      type: string,
-      enum: string[]
-    },
-    coordinates: {
-      type: number[]
-    },
-    index: string
+    type: string;
+    coordinates: number[];
   };
   city: string;
   address: string;
@@ -27,14 +21,8 @@ export interface ResourceRequestInterface extends Document {
   type: number;
   description: string;
   location: {
-    type: {
-      type: string;
-      enum: string[];
-    };
-    coordinates: {
-      type: number[];
-    };
-    index: string;
+    type: string;
+    coordinates: number[];
   };
   city: string;
   address: string;

@@ -1,6 +1,6 @@
 import mongoose, { Model } from "mongoose";
 import { ResourceRequestInterface } from "../interfaces/interface";
-const ResourceRequestSchema = new mongoose.Schema<ResourceRequestInterface>({
+const resourceRequestSchema = new mongoose.Schema<ResourceRequestInterface>({
   name: String,
   type: Number,
   description: String,
@@ -14,7 +14,6 @@ const ResourceRequestSchema = new mongoose.Schema<ResourceRequestInterface>({
       type: [Number],
       required: true,
     },
-    index: "2dsphere",
   },
   city: String,
   address: String,
@@ -24,9 +23,11 @@ const ResourceRequestSchema = new mongoose.Schema<ResourceRequestInterface>({
   like: Number,
 });
 
+resourceRequestSchema.index({ location: "2dsphere" });
+
 const ResourceRequest: Model<ResourceRequestInterface> = mongoose.model(
-  "AvailableResource",
-  ResourceRequestSchema
+  "ResourceRequest",
+  resourceRequestSchema
 );
 
 export default ResourceRequest;

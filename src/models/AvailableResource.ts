@@ -9,13 +9,14 @@ const availableResourceSchema = new mongoose.Schema<AvailableResourceInterface>(
     phoneNumber: String,
     location: {
       type: {
-        type: String, 
-        enum: ["Point"], 
+        type: String,
+        enum: ["Point"],
+        required: true,
       },
       coordinates: {
         type: [Number],
+        required: true,
       },
-      index: '2dsphere'
     },
     city: String,
     address: String,
@@ -25,6 +26,7 @@ const availableResourceSchema = new mongoose.Schema<AvailableResourceInterface>(
   }
 );
 
+availableResourceSchema.index({ location: "2dsphere" });
 const AvailableResource: Model<AvailableResourceInterface> = mongoose.model(
   "AvailableResource",
   availableResourceSchema

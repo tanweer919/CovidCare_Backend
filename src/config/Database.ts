@@ -10,6 +10,7 @@ export const connectToDatabase = async () => {
     {
       useUnifiedTopology: true,
       useNewUrlParser: true,
+      useCreateIndex: true
     }
   );
   } catch(e) {
