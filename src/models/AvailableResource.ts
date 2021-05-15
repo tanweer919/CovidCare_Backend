@@ -18,6 +18,7 @@ const availableResourceSchema = new mongoose.Schema<AvailableResourceInterface>(
         required: true,
       },
     },
+    available: Number,
     city: String,
     address: String,
     verified: Number,
