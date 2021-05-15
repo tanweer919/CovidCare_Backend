@@ -21,6 +21,6 @@ connectToDatabase();
 
 //Routes
 app.use("/api", router);
-app.listen(8080, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server started");
 });
