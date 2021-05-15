@@ -4,7 +4,7 @@
   "description": "Covid Care Backend",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node dist/app.js",
+    "start": "ts-node ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc -p .",
     "postinstall": "npm run tsc"
