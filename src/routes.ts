@@ -13,6 +13,7 @@ router.use(function (req, res, next) {
   next();
 });
 router.post("/autocomplete", LocationController.autoComplete);
+router.post("/place", LocationController.fetchPlaceDetail);
 router.post("/available/add", ResourceController.createAvailableResource);
 router.post("/request/add", ResourceController.createResourceRequest);
 router.options("*", cors());

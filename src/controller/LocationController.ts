@@ -20,6 +20,19 @@ class LocationController {
       res.status(400).send({ message: "Some error occured" });
     }
   }
+
+  async fetchPlaceDetail(req: Request, res: Response) {
+    const placeId = req.body["placeId"];
+    const placeDetailUrl = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${process.env.MAP_API_KEY}`;
+    try {
+      const { data } = await axios.get(placeDetailUrl);
+      const location = data?.result?.geometry?.location;
+      res.status(200).send(location);
+    } catch (e) {
+      console.log(e);
+      res.status(400).send({ message: "Some error occured" });
+    }
+  }
 }
 
 export default new LocationController();
