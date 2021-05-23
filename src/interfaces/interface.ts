@@ -11,7 +11,7 @@ export interface AvailableResourceInterface extends Document {
   };
   city: string;
   address: string;
-  available: string;
+  available: number;
   verified: number;
   source: string;
   like: number;

@@ -8,23 +8,25 @@ class ResourceController {
     try {
       const availableResource = new AvailableResource();
       availableResource.name = data["name"];
-      availableResource.type = data["type"];
-      availableResource.description = data["type"];
+      availableResource.type = +data["type"];
+      availableResource.description = data["description"];
       availableResource.contactName = data["contactName"];
       availableResource.phoneNumber = data["phoneNumber"];
       availableResource.city = data["city"];
       availableResource.address = data["address"];
-      availableResource.verified = data["verified"];
+      availableResource.available = +data["available"];
       availableResource.source = data["source"];
       availableResource.like = 0;
+      availableResource.verified = 0;
       availableResource.location = {
         type: "Point",
-        coordinates: [+data["lat"], +data["long"]],
+        coordinates: data["location"],
       };
       await availableResource.save();
-      res.status(201).send({ message: "Resource created successfully" });
+      return res.status(201).send({ message: "Resource created successfully" });
     } catch (e) {
       console.log(e);
+      return res.status(400).send({ message: "Some error occured" });
     }
   }
 
@@ -43,12 +45,13 @@ class ResourceController {
       resourceRequest.like = 0;
       resourceRequest.location = {
         type: "Point",
-        coordinates: [+data["lat"], +data["long"]],
+        coordinates: data["location"],
       };
-      await resourceRequest.save()
-      res.status(201).send({ message: "Resource created successfully" });
+      await resourceRequest.save();
+      return res.status(201).send({ message: "Resource created successfully" });
     } catch (e) {
       console.log(e);
+      return res.status(400).send({ message: "Some error occured" });
     }
   }
 }
