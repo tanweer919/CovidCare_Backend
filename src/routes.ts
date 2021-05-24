@@ -16,12 +16,14 @@ router.post("/autocomplete", LocationController.autoComplete);
 router.post("/place/id", LocationController.fetchPlaceDetailFromPlaceId);
 router.post("/city/latlng", LocationController.fetchCityFromLatLong);
 router.post("/available/add", ResourceController.createAvailableResource);
-router.post("/request/add", ResourceController.createResourceRequest);
 router.post(
   "/available/all",
   ResourceController.fetchAvailableResourceByLocation
 );
+router.get("/available/:id", ResourceController.findAvailableResourceById);
+router.post("/request/add", ResourceController.createResourceRequest);
 router.post("/request/all", ResourceController.fetchResourceRequestByLocation);
+router.get("/request/:id", ResourceController.findResourceRequestById);
 router.options("*", cors());
 
 export default router;

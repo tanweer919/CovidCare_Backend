@@ -62,12 +62,15 @@ class ResourceController {
       let availableResources;
       if (lat && long) {
         availableResources = await AvailableResource.find({
+          verified: 1,
           location: {
             $near: { $geometry: { type: "Point", coordinates: [+lat, +long] } },
           },
         }).select("-location");
       } else {
-        availableResources = await AvailableResource.find()
+        availableResources = await AvailableResource.find({
+          verified: 1,
+        })
           .select("-location")
           .sort({ _id: -1 });
       }
@@ -95,6 +98,40 @@ class ResourceController {
           .sort({ _id: -1 });
       }
       res.status(200).send(resourceRequests);
+    } catch (e) {
+      console.log(e);
+      return res.status(400).send({ message: "Some error occured" });
+    }
+  }
+
+  async findAvailableResourceById(req: Request, res: Response) {
+    const { id } = req.params;
+    try {
+      const resource = await AvailableResource.findById(id, {
+        verified: 1,
+      }).select("-location");
+      if (resource) {
+        return res.status(200).send(resource);
+      } else {
+        return res.status(404).send({ message: "Some error occured" });
+      }
+    } catch (e) {
+      console.log(e);
+      return res.status(400).send({ message: "Some error occured" });
+    }
+  }
+
+  async findResourceRequestById(req: Request, res: Response) {
+    const { id } = req.params;
+    console.log(id);
+    try {
+      const resource = await ResourceRequest.findById(id).select("-location");
+      console.log(resource);
+      if (resource) {
+        return res.status(200).send(resource);
+      } else {
+        return res.status(404).send({ message: "Some error occured" });
+      }
     } catch (e) {
       console.log(e);
       return res.status(400).send({ message: "Some error occured" });
