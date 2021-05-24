@@ -17,6 +17,11 @@ router.post("/place/id", LocationController.fetchPlaceDetailFromPlaceId);
 router.post("/city/latlng", LocationController.fetchCityFromLatLong);
 router.post("/available/add", ResourceController.createAvailableResource);
 router.post("/request/add", ResourceController.createResourceRequest);
+router.post(
+  "/available/all",
+  ResourceController.fetchAvailableResourceByLocation
+);
+router.post("/request/all", ResourceController.fetchResourceRequestByLocation);
 router.options("*", cors());
 
 export default router;

@@ -54,6 +54,52 @@ class ResourceController {
       return res.status(400).send({ message: "Some error occured" });
     }
   }
+
+  async fetchAvailableResourceByLocation(req: Request, res: Response) {
+    const lat = req.body["lat"];
+    const long = req.body["long"];
+    try {
+      let availableResources;
+      if (lat && long) {
+        availableResources = await AvailableResource.find({
+          location: {
+            $near: { $geometry: { type: "Point", coordinates: [+lat, +long] } },
+          },
+        }).select("-location");
+      } else {
+        availableResources = await AvailableResource.find()
+          .select("-location")
+          .sort({ _id: -1 });
+      }
+      res.status(200).send(availableResources);
+    } catch (e) {
+      console.log(e);
+      return res.status(400).send({ message: "Some error occured" });
+    }
+  }
+
+  async fetchResourceRequestByLocation(req: Request, res: Response) {
+    const lat = req.body["lat"];
+    const long = req.body["long"];
+    try {
+      let resourceRequests;
+      if (lat && long) {
+        resourceRequests = await ResourceRequest.find({
+          location: {
+            $near: { $geometry: { type: "Point", coordinates: [+lat, +long] } },
+          },
+        }).select("-location");
+      } else {
+        resourceRequests = await ResourceRequest.find()
+          .select("-location")
+          .sort({ _id: -1 });
+      }
+      res.status(200).send(resourceRequests);
+    } catch (e) {
+      console.log(e);
+      return res.status(400).send({ message: "Some error occured" });
+    }
+  }
 }
 
 export default new ResourceController();
