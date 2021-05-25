@@ -18,11 +18,22 @@ router.post("/city/latlng", LocationController.fetchCityFromLatLong);
 router.post("/available/add", ResourceController.createAvailableResource);
 router.post(
   "/available/all",
-  ResourceController.fetchAvailableResourceByLocation
+  ResourceController.fetchAllAvailableResourceByLocation
+);
+router.post(
+  "/available/search",
+  ResourceController.searchAvailableResourceByLocation
 );
 router.get("/available/:id", ResourceController.findAvailableResourceById);
 router.post("/request/add", ResourceController.createResourceRequest);
-router.post("/request/all", ResourceController.fetchResourceRequestByLocation);
+router.post(
+  "/request/all",
+  ResourceController.fetchAllResourceRequestByLocation
+);
+router.post(
+  "/request/search",
+  ResourceController.searchResourceRequestByLocation
+);
 router.get("/request/:id", ResourceController.findResourceRequestById);
 router.options("*", cors());
 
