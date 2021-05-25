@@ -107,9 +107,7 @@ class ResourceController {
   async findAvailableResourceById(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      const resource = await AvailableResource.findById(id, {
-        verified: 1,
-      }).select("-location");
+      const resource = await AvailableResource.findById(id, {verified: 1}).select("-location");
       if (resource) {
         return res.status(200).send(resource);
       } else {
@@ -126,7 +124,7 @@ class ResourceController {
     console.log(id);
     try {
       const resource = await ResourceRequest.findById(id).select("-location");
-      console.log(resource);
+      console.log(resource)
       if (resource) {
         return res.status(200).send(resource);
       } else {
