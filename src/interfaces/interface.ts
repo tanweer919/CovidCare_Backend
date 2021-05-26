@@ -15,6 +15,7 @@ export interface AvailableResourceInterface extends Document {
   verified: number;
   source: string;
   like: number;
+  created: Date;
 }
 
 export interface ResourceRequestInterface extends Document {
@@ -31,4 +32,5 @@ export interface ResourceRequestInterface extends Document {
   phoneNumber: string;
   quantity: string;
   like: number;
+  created: Date;
 }

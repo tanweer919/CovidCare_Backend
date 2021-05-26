@@ -21,6 +21,7 @@ const resourceRequestSchema = new mongoose.Schema<ResourceRequestInterface>({
   phoneNumber: String,
   quantity: String,
   like: Number,
+  created: { type: Date, default: Date.now },
 });
 
 resourceRequestSchema.index({ location: "2dsphere" });

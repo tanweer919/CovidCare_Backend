@@ -24,6 +24,7 @@ const availableResourceSchema = new mongoose.Schema<AvailableResourceInterface>(
     verified: Number,
     source: String,
     like: Number,
+    created: { type: Date, default: Date.now },
   }
 );
 
