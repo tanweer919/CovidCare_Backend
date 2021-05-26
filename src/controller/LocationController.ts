@@ -27,7 +27,7 @@ class LocationController {
     try {
       const { data } = await axios.get(placeDetailUrl);
       const location = data?.result?.geometry?.location;
-      const city = data?.address_components[0]?.short_name;
+      const city = data?.address_components[1]?.short_name;
       res.status(200).send({ ...location, city });
     } catch (e) {
       console.log(e);
@@ -42,8 +42,7 @@ class LocationController {
     try {
       const { data } = await axios.get(placeDetailUrl);
       const components = data?.results[0];
-      const city = components?.address_components[0]?.short_name;
-      console.log(city);
+      const city = components?.address_components[1]?.short_name;
       res.status(200).send(city);
     } catch (e) {
       console.log(e);
