@@ -1,6 +1,6 @@
 import { Arg, Query, Resolver, Mutation } from "type-graphql";
 import ResourceRequestSchema, {
-  NewResourceInput,
+  NewResourceRequestInput,
 } from "../schema/ResourceRequest";
 import ResourceRequest from "../../models/ResourceRequest";
 import {
@@ -11,9 +11,9 @@ import {
 @Resolver((of) => ResourceRequestSchema)
 class ResourceRequestResolver {
   @Query((returns) => ResourceRequestSchema)
-  async ResourceRequests(
-    @Arg("lat") lat: number,
-    @Arg("long") long: number
+  async resourceRequests(
+    @Arg("lat", { nullable: true }) lat: number,
+    @Arg("long", { nullable: true }) long: number
   ): Promise<ResourceRequestInterface[]> {
     try {
       let resourceRequests: ResourceRequestDocument[];
@@ -39,8 +39,8 @@ class ResourceRequestResolver {
   }
 
   @Mutation((returns) => ResourceRequestSchema)
-  async createAvailableResource(
-    @Arg("newResourceData") newResourceData: NewResourceInput
+  async createResourceRequest(
+    @Arg("newResourceData") newResourceData: NewResourceRequestInput
   ): Promise<ResourceRequestInterface> {
     try {
       const resourceRequest = new ResourceRequest();

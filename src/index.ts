@@ -1,35 +1,42 @@
 require("dotenv").config();
+import "reflect-metadata"
 import Express from "express";
 import cors from "cors";
-import { graphqlHTTP } from "express-graphql";
-import router from "./routes";
+import AvailableResourceResolver from "./graphql/resolvers/AvailableResource";
+import ResourceRequestResolver from "./graphql/resolvers/ResourceRequestResolver";
+import { buildSchema } from "type-graphql";
 import { connectToDatabase } from "./config/Database";
-import schema from "./graphql/schema/index";
-import rootResolver from "./graphql/resolvers/index";
-const app = Express();
+import { ApolloServer } from "apollo-server-express";
+const main = async () => {
+  const schema = await buildSchema({
+    resolvers: [AvailableResourceResolver, ResourceRequestResolver],
+    emitSchemaFile: true,
+    validate: false,
+  });
 
-app.use(Express.json());
-app.use(Express.urlencoded({ extended: false }));
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-    methods: "OPTIONS, GET, HEAD, PUT, PATCH, POST, DELETE",
-    allowedHeaders: ["Content-Type", "Depth", "User-Agent", "Cache-Control"],
-  })
-);
+  const apolloServer = new ApolloServer({ schema });
+  const app = Express();
 
-//ConnectToDatabase
-connectToDatabase();
+  app.use(Express.json());
+  app.use(Express.urlencoded({ extended: false }));
+  app.use(
+    cors({
+      origin: "*",
+      credentials: true,
+      methods: "OPTIONS, GET, HEAD, PUT, PATCH, POST, DELETE",
+      allowedHeaders: ["Content-Type", "Depth", "User-Agent", "Cache-Control"],
+    })
+  );
 
-//Graphql
-app.use(
-  "/graphql",
-  graphqlHTTP({ schema: schema, rootValue: rootResolver, graphiql: true })
-);
+  //ConnectToDatabase
+  connectToDatabase();
 
-//Routes
-// app.use("/api", router);
-app.listen(process.env.PORT || 8080, () => {
-  console.log("Server started");
-});
+  apolloServer.applyMiddleware({ app, cors: false});
+
+  //Sever
+  // app.use("/api", router);
+  app.listen(process.env.PORT || 8080, () => {
+    console.log("Server started");
+  });
+};
+main().catch((err) => console.log(err));

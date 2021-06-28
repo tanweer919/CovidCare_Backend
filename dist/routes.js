@@ -1,21 +1,41 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const LocationController_1 = __importDefault(require("./controller/LocationController"));
-const ResourceController_1 = __importDefault(require("./controller/ResourceController"));
-const router = express_1.default.Router();
-router.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-router.post("/autocomplete", LocationController_1.default.autoComplete);
-router.post("/available/add", ResourceController_1.default.createAvailableResource);
-router.post("/request/add", ResourceController_1.default.createResourceRequest);
-router.options("*", cors_1.default());
-exports.default = router;
+// import Express from "express";
+// import cors from "cors";
+// import LocationController from "./controller/LocationController";
+// import ResourceController from "./controller/ResourceController";
+// import ResourceRequest from "./models/ResourceRequest";
+// const router = Express.Router();
+// router.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
+// router.post("/autocomplete", LocationController.autoComplete);
+// router.post("/place/id", LocationController.fetchPlaceDetailFromPlaceId);
+// router.post("/city/latlng", LocationController.fetchCityFromLatLong);
+// router.post("/available/add", ResourceController.createAvailableResource);
+// router.post(
+//   "/available/all",
+//   ResourceController.fetchAllAvailableResourceByLocation
+// );
+// router.post(
+//   "/available/search",
+//   ResourceController.searchAvailableResourceByLocation
+// );
+// router.get("/available/:id", ResourceController.findAvailableResourceById);
+// router.post("/request/add", ResourceController.createResourceRequest);
+// router.post(
+//   "/request/all",
+//   ResourceController.fetchAllResourceRequestByLocation
+// );
+// router.post(
+//   "/request/search",
+//   ResourceController.searchResourceRequestByLocation
+// );
+// router.get("/request/:id", ResourceController.findResourceRequestById);
+// router.options("*", cors());
+// export default router;
 //# sourceMappingURL=routes.js.map

@@ -47,7 +47,7 @@ class AvailableResourceSchema {
 }
 
 @InputType()
-export class NewResourceInput {
+export class NewAvailableResourceInput {
   @Field()
   name: string;
 

@@ -27,6 +27,7 @@ const availableResourceSchema = new mongoose_1.default.Schema({
     verified: Number,
     source: String,
     like: Number,
+    created: { type: Date, default: Date.now },
 });
 availableResourceSchema.index({ location: "2dsphere" });
 const AvailableResource = mongoose_1.default.model("AvailableResource", availableResourceSchema);

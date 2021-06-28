@@ -41,7 +41,7 @@ class ResourceRequestSchema {
 }
 
 @InputType()
-export class NewResourceInput {
+export class NewResourceRequestInput {
   @Field()
   name: string;
 

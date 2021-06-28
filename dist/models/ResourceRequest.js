@@ -25,6 +25,7 @@ const resourceRequestSchema = new mongoose_1.default.Schema({
     phoneNumber: String,
     quantity: String,
     like: Number,
+    created: { type: Date, default: Date.now },
 });
 resourceRequestSchema.index({ location: "2dsphere" });
 const ResourceRequest = mongoose_1.default.model("ResourceRequest", resourceRequestSchema);

@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv").config();
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const routes_1 = __importDefault(require("./routes"));
 const Database_1 = require("./config/Database");
 const app = express_1.default();
 app.use(express_1.default.json());
@@ -19,9 +18,6 @@ app.use(cors_1.default({
 }));
 //ConnectToDatabase
 Database_1.connectToDatabase();
-//Routes
-app.use("/api", routes_1.default);
-app.listen(8080, () => {
-    console.log("Server started");
-});
+//Server
+// app.use("/api", router);
 //# sourceMappingURL=index.js.map

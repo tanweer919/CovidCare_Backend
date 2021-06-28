@@ -1,6 +1,6 @@
 import { Arg, Query, Resolver, Mutation } from "type-graphql";
 import AvailableResourceSchema, {
-  NewResourceInput,
+  NewAvailableResourceInput,
 } from "../schema/AvailableResource";
 import AvailableResource from "../../models/AvailableResource";
 import {
@@ -12,8 +12,8 @@ import {
 class AvailableResourceResolver {
   @Query((returns) => AvailableResourceSchema)
   async availableResources(
-    @Arg("lat") lat: number,
-    @Arg("long") long: number
+    @Arg("lat", { nullable: true }) lat: number,
+    @Arg("long", { nullable: true }) long: number
   ): Promise<AvailableResourceInterface[]> {
     try {
       let availableResources: AvailableResourceDocument[];
@@ -40,7 +40,7 @@ class AvailableResourceResolver {
 
   @Mutation((returns) => AvailableResourceSchema)
   async createAvailableResource(
-    @Arg("newResourceData") newResourceData: NewResourceInput
+    @Arg("newResourceData") newResourceData: NewAvailableResourceInput
   ): Promise<AvailableResourceInterface> {
     try {
       const availableResource = new AvailableResource();
