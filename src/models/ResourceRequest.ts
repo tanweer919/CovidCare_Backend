@@ -1,6 +1,6 @@
 import mongoose, { Model } from "mongoose";
-import { ResourceRequestInterface } from "../interfaces/interface";
-const resourceRequestSchema = new mongoose.Schema<ResourceRequestInterface>({
+import { ResourceRequestDocument } from "../interfaces/interface";
+const resourceRequestSchema = new mongoose.Schema<ResourceRequestDocument>({
   name: String,
   type: Number,
   description: String,
@@ -26,7 +26,7 @@ const resourceRequestSchema = new mongoose.Schema<ResourceRequestInterface>({
 
 resourceRequestSchema.index({ location: "2dsphere" });
 
-const ResourceRequest: Model<ResourceRequestInterface> = mongoose.model(
+const ResourceRequest: Model<ResourceRequestDocument> = mongoose.model(
   "ResourceRequest",
   resourceRequestSchema
 );

@@ -1,6 +1,10 @@
 import axios from "axios";
 import { Request, Response } from "express";
 import { Mongoose } from "mongoose";
+import {
+  AvailableResourceDocument,
+  ResourceRequestDocument,
+} from "../interfaces/interface";
 import AvailableResource from "../models/AvailableResource";
 import ResourceRequest from "../models/ResourceRequest";
 class ResourceController {
@@ -60,7 +64,7 @@ class ResourceController {
     const lat = req.body["lat"];
     const long = req.body["long"];
     try {
-      let availableResources;
+      let availableResources: AvailableResourceDocument[];
       if (lat && long) {
         availableResources = await AvailableResource.find({
           verified: 1,
@@ -86,7 +90,7 @@ class ResourceController {
     const lat = req.body["lat"];
     const long = req.body["long"];
     try {
-      let resourceRequests;
+      let resourceRequests: ResourceRequestDocument[];
       if (lat && long) {
         resourceRequests = await ResourceRequest.find({
           location: {
@@ -148,7 +152,7 @@ class ResourceController {
       const lat = location?.lat;
       const long = location?.lng;
       try {
-        let availableResources;
+        let availableResources: AvailableResourceDocument[];
         if (lat && long && type) {
           availableResources = await AvailableResource.find({
             verified: 1,
@@ -184,7 +188,7 @@ class ResourceController {
       const lat = location?.lat;
       const long = location?.lng;
       try {
-        let resourceRequests;
+        let resourceRequests: ResourceRequestDocument[];
         if (lat && long) {
           resourceRequests = await ResourceRequest.find({
             type,
