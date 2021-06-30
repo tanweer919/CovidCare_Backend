@@ -47,7 +47,7 @@ const type_graphql_1 = require("type-graphql");
 const ResourceRequest_1 = __importStar(require("../schema/ResourceRequest"));
 const ResourceRequest_2 = __importDefault(require("../../models/ResourceRequest"));
 let ResourceRequestResolver = class ResourceRequestResolver {
-    ResourceRequests(lat, long) {
+    resourceRequests(lat, long) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 let resourceRequests;
@@ -71,7 +71,7 @@ let ResourceRequestResolver = class ResourceRequestResolver {
             }
         });
     }
-    createAvailableResource(newResourceData) {
+    createResourceRequest(newResourceData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const resourceRequest = new ResourceRequest_2.default();
@@ -99,19 +99,19 @@ let ResourceRequestResolver = class ResourceRequestResolver {
 };
 __decorate([
     type_graphql_1.Query((returns) => ResourceRequest_1.default),
-    __param(0, type_graphql_1.Arg("lat")),
-    __param(1, type_graphql_1.Arg("long")),
+    __param(0, type_graphql_1.Arg("lat", { nullable: true })),
+    __param(1, type_graphql_1.Arg("long", { nullable: true })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", Promise)
-], ResourceRequestResolver.prototype, "ResourceRequests", null);
+], ResourceRequestResolver.prototype, "resourceRequests", null);
 __decorate([
     type_graphql_1.Mutation((returns) => ResourceRequest_1.default),
     __param(0, type_graphql_1.Arg("newResourceData")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [ResourceRequest_1.NewResourceInput]),
+    __metadata("design:paramtypes", [ResourceRequest_1.NewResourceRequestInput]),
     __metadata("design:returntype", Promise)
-], ResourceRequestResolver.prototype, "createAvailableResource", null);
+], ResourceRequestResolver.prototype, "createResourceRequest", null);
 ResourceRequestResolver = __decorate([
     type_graphql_1.Resolver((of) => ResourceRequest_1.default)
 ], ResourceRequestResolver);

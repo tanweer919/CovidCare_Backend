@@ -102,8 +102,8 @@ let AvailableResourceResolver = class AvailableResourceResolver {
 };
 __decorate([
     type_graphql_1.Query((returns) => AvailableResource_1.default),
-    __param(0, type_graphql_1.Arg("lat")),
-    __param(1, type_graphql_1.Arg("long")),
+    __param(0, type_graphql_1.Arg("lat", { nullable: true })),
+    __param(1, type_graphql_1.Arg("long", { nullable: true })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", Promise)
@@ -112,7 +112,7 @@ __decorate([
     type_graphql_1.Mutation((returns) => AvailableResource_1.default),
     __param(0, type_graphql_1.Arg("newResourceData")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [AvailableResource_1.NewResourceInput]),
+    __metadata("design:paramtypes", [AvailableResource_1.NewAvailableResourceInput]),
     __metadata("design:returntype", Promise)
 ], AvailableResourceResolver.prototype, "createAvailableResource", null);
 AvailableResourceResolver = __decorate([

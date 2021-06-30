@@ -9,7 +9,7 @@ type AvailableResourceSchema {
   city: String!
   contactName: String!
   created: DateTime!
-  description: String!
+  description: String
   id: ID!
   like: Int!
   location: LocationSchema!
@@ -70,7 +70,7 @@ type ResourceRequestSchema {
   city: String!
   contactName: String!
   created: DateTime!
-  description: String!
+  description: String
   id: ID!
   like: Int!
   location: LocationSchema!

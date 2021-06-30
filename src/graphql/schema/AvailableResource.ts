@@ -12,7 +12,7 @@ class AvailableResourceSchema {
   @Field((type) => Int)
   type: number;
 
-  @Field()
+  @Field({nullable: true})
   description: string;
 
   @Field()

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewResourceInput = void 0;
+exports.NewResourceRequestInput = void 0;
 const type_graphql_1 = require("type-graphql");
 const Location_1 = __importDefault(require("./Location"));
 let ResourceRequestSchema = class ResourceRequestSchema {
@@ -30,7 +30,7 @@ __decorate([
     __metadata("design:type", Number)
 ], ResourceRequestSchema.prototype, "type", void 0);
 __decorate([
-    type_graphql_1.Field(),
+    type_graphql_1.Field({ nullable: true }),
     __metadata("design:type", String)
 ], ResourceRequestSchema.prototype, "description", void 0);
 __decorate([
@@ -68,47 +68,47 @@ __decorate([
 ResourceRequestSchema = __decorate([
     type_graphql_1.ObjectType()
 ], ResourceRequestSchema);
-let NewResourceInput = class NewResourceInput {
+let NewResourceRequestInput = class NewResourceRequestInput {
 };
 __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
-], NewResourceInput.prototype, "name", void 0);
+], NewResourceRequestInput.prototype, "name", void 0);
 __decorate([
     type_graphql_1.Field((type) => type_graphql_1.Int),
     __metadata("design:type", Number)
-], NewResourceInput.prototype, "type", void 0);
+], NewResourceRequestInput.prototype, "type", void 0);
 __decorate([
     type_graphql_1.Field({ nullable: true }),
     __metadata("design:type", String)
-], NewResourceInput.prototype, "description", void 0);
+], NewResourceRequestInput.prototype, "description", void 0);
 __decorate([
     type_graphql_1.Field((type) => [type_graphql_1.Float]),
     __metadata("design:type", Array)
-], NewResourceInput.prototype, "location", void 0);
+], NewResourceRequestInput.prototype, "location", void 0);
 __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
-], NewResourceInput.prototype, "city", void 0);
+], NewResourceRequestInput.prototype, "city", void 0);
 __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
-], NewResourceInput.prototype, "address", void 0);
+], NewResourceRequestInput.prototype, "address", void 0);
 __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
-], NewResourceInput.prototype, "contactName", void 0);
+], NewResourceRequestInput.prototype, "contactName", void 0);
 __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
-], NewResourceInput.prototype, "phoneNumber", void 0);
+], NewResourceRequestInput.prototype, "phoneNumber", void 0);
 __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
-], NewResourceInput.prototype, "quantity", void 0);
-NewResourceInput = __decorate([
+], NewResourceRequestInput.prototype, "quantity", void 0);
+NewResourceRequestInput = __decorate([
     type_graphql_1.InputType()
-], NewResourceInput);
-exports.NewResourceInput = NewResourceInput;
+], NewResourceRequestInput);
+exports.NewResourceRequestInput = NewResourceRequestInput;
 exports.default = ResourceRequestSchema;
 //# sourceMappingURL=ResourceRequest.js.map
