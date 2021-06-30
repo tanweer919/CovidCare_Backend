@@ -7,10 +7,11 @@ import {
   AvailableResourceInterface,
   AvailableResourceDocument,
 } from "../../interfaces/interface";
+import axios from "axios";
 
 @Resolver((of) => AvailableResourceSchema)
 class AvailableResourceResolver {
-  @Query((returns) => AvailableResourceSchema)
+  @Query((returns) => [AvailableResourceSchema])
   async availableResources(
     @Arg("lat", { nullable: true }) lat: number,
     @Arg("long", { nullable: true }) long: number
@@ -29,10 +30,11 @@ class AvailableResourceResolver {
           verified: 1,
         }).sort({ _id: -1 });
       }
-      return availableResources.map((resource) => ({
-        id: resource.id,
-        ...resource.toObject(),
-      }));
+      return availableResources.map((resource) => {
+        const { _id, __v, ...doc } = { ...resource.toObject() };
+        const id = resource.id;
+        return { id, ...doc };
+      });
     } catch (e) {
       throw new Error("Some error occured");
     }
@@ -61,6 +63,69 @@ class AvailableResourceResolver {
       };
       const newResource = await availableResource.save();
       return { id: newResource.id, ...newResource.toObject() };
+    } catch (e) {
+      console.log(e);
+      throw new Error("Some error occured");
+    }
+  }
+
+  @Query((returns) => AvailableResourceSchema)
+  async availableResource(
+    @Arg("id") id: string
+  ): Promise<AvailableResourceInterface> {
+    try {
+      const resource = await AvailableResource.findOne({
+        _id: id,
+        verified: 1,
+      });
+      if (resource) {
+        const { _id, __v, ...doc } = { ...resource.toObject() };
+        return { id: resource.id, ...doc };
+      } else {
+        throw new Error("Some error occured");
+      }
+    } catch (e) {
+      console.log(e);
+      throw new Error("Some error occured");
+    }
+  }
+
+  @Query((returns) => [AvailableResourceSchema])
+  async availableResourcesByLocation(
+    @Arg("placeId") placeId: string,
+    @Arg("type") type: number
+  ): Promise<AvailableResourceInterface[]> {
+    const placeDetailUrl = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${process.env.MAP_API_KEY}`;
+    try {
+      const { data } = await axios.get(placeDetailUrl);
+      const location = data?.result?.geometry?.location;
+      const lat = location?.lat;
+      const long = location?.lng;
+      try {
+        let availableResources: AvailableResourceDocument[];
+        if (lat && long && type) {
+          availableResources = await AvailableResource.find({
+            verified: 1,
+            type,
+            location: {
+              $near: {
+                $geometry: { type: "Point", coordinates: [+lat, +long] },
+                $maxDistance: 50000,
+              },
+            },
+          });
+        } else {
+          availableResources = [];
+        }
+        return availableResources.map((resource) => {
+          const { _id, __v, ...doc } = { ...resource.toObject() };
+          const id = resource.id;
+          return { id, ...doc };
+        });
+      } catch (e) {
+        console.log(e);
+        throw new Error("Some error occured");
+      }
     } catch (e) {
       console.log(e);
       throw new Error("Some error occured");

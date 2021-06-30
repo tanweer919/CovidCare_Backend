@@ -111,20 +111,20 @@
 
 //   async findAvailableResourceById(req: Request, res: Response) {
 //     const { id } = req.params;
-//     try {
-//       const resource = await AvailableResource.findOne({
-//         _id: id,
-//         verified: 1,
-//       }).select("-location");
-//       if (resource) {
-//         return res.status(200).send(resource);
-//       } else {
-//         return res.status(404).send({ message: "Some error occured" });
-//       }
-//     } catch (e) {
-//       console.log(e);
-//       return res.status(400).send({ message: "Some error occured" });
-//     }
+// try {
+//   const resource = await AvailableResource.findOne({
+//     _id: id,
+//     verified: 1,
+//   }).select("-location");
+//   if (resource) {
+//     return res.status(200).send(resource);
+//   } else {
+//     return res.status(404).send({ message: "Some error occured" });
+//   }
+// } catch (e) {
+//   console.log(e);
+//   return res.status(400).send({ message: "Some error occured" });
+// }
 //   }
 
 //   async findResourceRequestById(req: Request, res: Response) {
@@ -143,39 +143,39 @@
 //   }
 
 //   async searchAvailableResourceByLocation(req: Request, res: Response) {
-//     const placeId = req.body["placeId"];
-//     const type = req.body["type"];
-//     const placeDetailUrl = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${process.env.MAP_API_KEY}`;
-//     try {
-//       const { data } = await axios.get(placeDetailUrl);
-//       const location = data?.result?.geometry?.location;
-//       const lat = location?.lat;
-//       const long = location?.lng;
-//       try {
-//         let availableResources: AvailableResourceDocument[];
-//         if (lat && long && type) {
-//           availableResources = await AvailableResource.find({
-//             verified: 1,
-//             type,
-//             location: {
-//               $near: {
-//                 $geometry: { type: "Point", coordinates: [+lat, +long] },
-//                 $maxDistance: 50000,
-//               },
-//             },
-//           }).select("-location");
-//         } else {
-//           availableResources = [];
-//         }
-//         res.status(200).send(availableResources);
-//       } catch (e) {
-//         console.log(e);
-//         return res.status(400).send({ message: "Some error occured" });
-//       }
-//     } catch (e) {
-//       console.log(e);
-//       res.status(400).send({ message: "Some error occured" });
+// const placeId = req.body["placeId"];
+// const type = req.body["type"];
+// const placeDetailUrl = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${process.env.MAP_API_KEY}`;
+// try {
+//   const { data } = await axios.get(placeDetailUrl);
+//   const location = data?.result?.geometry?.location;
+//   const lat = location?.lat;
+//   const long = location?.lng;
+//   try {
+//     let availableResources: AvailableResourceDocument[];
+//     if (lat && long && type) {
+//       availableResources = await AvailableResource.find({
+//         verified: 1,
+//         type,
+//         location: {
+//           $near: {
+//             $geometry: { type: "Point", coordinates: [+lat, +long] },
+//             $maxDistance: 50000,
+//           },
+//         },
+//       }).select("-location");
+//     } else {
+//       availableResources = [];
 //     }
+//     res.status(200).send(availableResources);
+//   } catch (e) {
+//     console.log(e);
+//     return res.status(400).send({ message: "Some error occured" });
+//   }
+// } catch (e) {
+//   console.log(e);
+//   res.status(400).send({ message: "Some error occured" });
+// }
 //   }
 
 //   async searchResourceRequestByLocation(req: Request, res: Response) {

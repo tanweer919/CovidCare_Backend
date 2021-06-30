@@ -61,8 +61,10 @@ input NewResourceRequestInput {
 }
 
 type Query {
-  availableResources(lat: Float, long: Float): AvailableResourceSchema!
-  resourceRequests(lat: Float, long: Float): ResourceRequestSchema!
+  availableResource(id: String!): ResourceRequestSchema!
+  availableResources(lat: Float, long: Float): [AvailableResourceSchema!]!
+  availableResourcesByLocation(placeId: String!, type: Float!): [AvailableResourceSchema!]!
+  resourceRequests(lat: Float, long: Float): [ResourceRequestSchema!]!
 }
 
 type ResourceRequestSchema {

@@ -7,10 +7,11 @@ import {
   ResourceRequestInterface,
   ResourceRequestDocument,
 } from "../../interfaces/interface";
+import axios from "axios";
 
 @Resolver((of) => ResourceRequestSchema)
 class ResourceRequestResolver {
-  @Query((returns) => ResourceRequestSchema)
+  @Query((returns) => [ResourceRequestSchema])
   async resourceRequests(
     @Arg("lat", { nullable: true }) lat: number,
     @Arg("long", { nullable: true }) long: number
@@ -29,10 +30,11 @@ class ResourceRequestResolver {
           verified: 1,
         }).sort({ _id: -1 });
       }
-      return resourceRequests.map((resource) => ({
-        id: resource.id,
-        ...resource.toObject(),
-      }));
+      return resourceRequests.map((resource) => {
+        const { _id, __v, ...doc } = { ...resource.toObject() };
+        const id = resource.id;
+        return { id, ...doc };
+      });
     } catch (e) {
       throw new Error("Some error occured");
     }
@@ -63,6 +65,67 @@ class ResourceRequestResolver {
       throw new Error("Some error occured");
     }
   }
+
+  @Query((returns) => ResourceRequestSchema)
+  async availableResource(
+    @Arg("id") id: string
+  ): Promise<ResourceRequestInterface> {
+    try {
+      const resource = await ResourceRequest.findOne({
+        _id: id,
+      });
+      if (resource) {
+        const { _id, __v, ...doc } = { ...resource.toObject() };
+        return { id: resource.id, ...doc };
+      } else {
+        throw new Error("Some error occured");
+      }
+    } catch (e) {
+      console.log(e);
+      throw new Error("Some error occured");
+    }
+  }
+
+  @Query((returns) => [ResourceRequestSchema])
+  async availableResourcesByLocation(
+    @Arg("placeId") placeId: string,
+    @Arg("type") type: number
+  ): Promise<ResourceRequestInterface[]> {
+    const placeDetailUrl = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${process.env.MAP_API_KEY}`;
+    try {
+      const { data } = await axios.get(placeDetailUrl);
+      const location = data?.result?.geometry?.location;
+      const lat = location?.lat;
+      const long = location?.lng;
+      try {
+        let resourceRequests: ResourceRequestDocument[];
+        if (lat && long && type) {
+          resourceRequests = await ResourceRequest.find({
+            verified: 1,
+            type,
+            location: {
+              $near: {
+                $geometry: { type: "Point", coordinates: [+lat, +long] },
+                $maxDistance: 50000,
+              },
+            },
+          });
+        } else {
+          resourceRequests = [];
+        }
+        return resourceRequests.map((resource) => {
+          const { _id, __v, ...doc } = { ...resource.toObject() };
+          const id = resource.id;
+          return { id, ...doc };
+        });
+      } catch (e) {
+        console.log(e);
+        throw new Error("Some error occured");
+      }
+    } catch (e) {
+      console.log(e);
+      throw new Error("Some error occured");
+    }
+  }
 }
 export default ResourceRequestResolver;
-

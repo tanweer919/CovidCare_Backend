@@ -2,7 +2,7 @@ require("dotenv").config();
 import "reflect-metadata"
 import Express from "express";
 import cors from "cors";
-import AvailableResourceResolver from "./graphql/resolvers/AvailableResource";
+import AvailableResourceResolver from "./graphql/resolvers/AvailableResourceResolver";
 import ResourceRequestResolver from "./graphql/resolvers/ResourceRequestResolver";
 import { buildSchema } from "type-graphql";
 import { connectToDatabase } from "./config/Database";
