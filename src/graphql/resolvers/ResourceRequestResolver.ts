@@ -8,6 +8,7 @@ import {
   ResourceRequestDocument,
 } from "../../interfaces/interface";
 import axios from "axios";
+import { transformResourceRequest } from "../helpers/transform";
 
 @Resolver((of) => ResourceRequestSchema)
 class ResourceRequestResolver {
@@ -30,11 +31,9 @@ class ResourceRequestResolver {
           verified: 1,
         }).sort({ _id: -1 });
       }
-      return resourceRequests.map((resource) => {
-        const { _id, __v, ...doc } = { ...resource.toObject() };
-        const id = resource.id;
-        return { id, ...doc };
-      });
+      return resourceRequests.map((resource) =>
+        transformResourceRequest(resource)
+      );
     } catch (e) {
       throw new Error("Some error occured");
     }
@@ -59,7 +58,7 @@ class ResourceRequestResolver {
         coordinates: newResourceData["location"],
       };
       const newResource = await resourceRequest.save();
-      return { id: newResource.id, ...newResource.toObject() };
+      return transformResourceRequest(newResource);
     } catch (e) {
       console.log(e);
       throw new Error("Some error occured");
@@ -87,7 +86,7 @@ class ResourceRequestResolver {
   }
 
   @Query((returns) => [ResourceRequestSchema])
-  async availableResourcesByLocation(
+  async resourceRequestsByLocation(
     @Arg("placeId") placeId: string,
     @Arg("type") type: number
   ): Promise<ResourceRequestInterface[]> {
@@ -113,11 +112,9 @@ class ResourceRequestResolver {
         } else {
           resourceRequests = [];
         }
-        return resourceRequests.map((resource) => {
-          const { _id, __v, ...doc } = { ...resource.toObject() };
-          const id = resource.id;
-          return { id, ...doc };
-        });
+        return resourceRequests.map((resource) =>
+          transformResourceRequest(resource)
+        );
       } catch (e) {
         console.log(e);
         throw new Error("Some error occured");

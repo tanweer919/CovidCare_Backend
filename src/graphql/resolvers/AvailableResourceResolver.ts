@@ -8,7 +8,7 @@ import {
   AvailableResourceDocument,
 } from "../../interfaces/interface";
 import axios from "axios";
-
+import { transformAvailableResource } from "../helpers/transform";
 @Resolver((of) => AvailableResourceSchema)
 class AvailableResourceResolver {
   @Query((returns) => [AvailableResourceSchema])
@@ -30,11 +30,9 @@ class AvailableResourceResolver {
           verified: 1,
         }).sort({ _id: -1 });
       }
-      return availableResources.map((resource) => {
-        const { _id, __v, ...doc } = { ...resource.toObject() };
-        const id = resource.id;
-        return { id, ...doc };
-      });
+      return availableResources.map((resource) =>
+        transformAvailableResource(resource)
+      );
     } catch (e) {
       throw new Error("Some error occured");
     }
@@ -62,7 +60,7 @@ class AvailableResourceResolver {
         coordinates: newResourceData["location"],
       };
       const newResource = await availableResource.save();
-      return { id: newResource.id, ...newResource.toObject() };
+      return transformAvailableResource(newResource);
     } catch (e) {
       console.log(e);
       throw new Error("Some error occured");
@@ -117,11 +115,9 @@ class AvailableResourceResolver {
         } else {
           availableResources = [];
         }
-        return availableResources.map((resource) => {
-          const { _id, __v, ...doc } = { ...resource.toObject() };
-          const id = resource.id;
-          return { id, ...doc };
-        });
+        return availableResources.map((resource) =>
+          transformAvailableResource(resource)
+        );
       } catch (e) {
         console.log(e);
         throw new Error("Some error occured");

@@ -65,6 +65,7 @@ type Query {
   availableResources(lat: Float, long: Float): [AvailableResourceSchema!]!
   availableResourcesByLocation(placeId: String!, type: Float!): [AvailableResourceSchema!]!
   resourceRequests(lat: Float, long: Float): [ResourceRequestSchema!]!
+  resourceRequestsByLocation(placeId: String!, type: Float!): [ResourceRequestSchema!]!
 }
 
 type ResourceRequestSchema {
