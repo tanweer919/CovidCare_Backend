@@ -1,5 +1,5 @@
 import { ObjectType, ID, Int, Field, InputType, Float } from "type-graphql";
-import LocationSchema from "./Location";
+import { LocationSchema } from "./Location";
 
 @ObjectType()
 class AvailableResourceSchema {
@@ -12,7 +12,7 @@ class AvailableResourceSchema {
   @Field((type) => Int)
   type: number;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   description: string;
 
   @Field()

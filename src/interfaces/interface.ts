@@ -1,5 +1,4 @@
 import { Document } from "mongoose";
-
 export interface AvailableResourceInterface {
   id: string;
   name: string;
@@ -72,4 +71,19 @@ export interface ResourceRequestDocument extends Document {
   quantity: string;
   like: number;
   created: Date;
+}
+
+export interface AutoComplete {
+  term: string;
+  placeId: string;
+}
+
+export interface PlaceDetail {
+  lat?: string;
+  lng?: string;
+  city?: string;
+}
+
+export interface City {
+  name?: string
 }
